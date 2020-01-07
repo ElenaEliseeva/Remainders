@@ -24,6 +24,16 @@ namespace Remainders.Controllers
         public IEnumerable<string> Get()
         {
             var remainders = _ctx.Remainders.Select(r => r.Text).ToArray();
+
+            Remainder remainder = new Remainder();
+            remainder.Text = "Купть слона";
+            remainder.TimeToWork = ToDateSQLite(DateTime.Now);
+            remainder.Priority = Priority.A;
+
+            _ctx.Remainders.Add(remainder);
+            _ctx.SaveChanges();
+
+
             return remainders;
         }
 
@@ -40,7 +50,7 @@ namespace Remainders.Controllers
         {
             Remainder remainder = new Remainder();
             remainder.Text = text;
-            remainder.TimeToWork = Convert.ToDateTime("2020-02-01 00:00:00");
+            remainder.TimeToWork = ToDateSQLite(DateTime.Now);
             remainder.Priority = Priority.A;
 
             _ctx.Remainders.Add(remainder);
@@ -65,6 +75,12 @@ namespace Remainders.Controllers
             _ctx.Remainders.Remove(remainder);
 
             _ctx.SaveChanges();
+        }
+
+        public static string ToDateSQLite(DateTime value)
+        {
+            string format_date = "yyyy-MM-dd HH:mm:ss.fff";
+            return value.ToString(format_date);
         }
     }
 }

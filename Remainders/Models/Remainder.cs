@@ -14,7 +14,7 @@ namespace Remainders.Models
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        public DateTime TimeToWork { get; set; }
+        public string TimeToWork { get; set; }
         public Priority Priority { get; set; }
     }
 }
